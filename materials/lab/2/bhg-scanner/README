@@ -1,1 +1,3 @@
-You might need to do a "go mod init bhg-scanner" or "go mod tidy"
+1. bhg-scanner comes with a single public method `PortScanner` that takes an address and slice of ports. This method then concurrently scans each port and determines the status of the port, either `closed` or `open`. Lastly, the closed and open ports are output in CSV format and the overall counts of each are returned.
+2. Based on the TODOs, the summary of this code was updated, a DialTimeout was set up for the worker, closed ports were added with their count returned, the output was enhanced to include closed ports and use CSV format, and the port channel was set to the number of ports provided to scan as a parameter.
+3. This code was additionally modified to take as parameters a specific address and slice of ports to scan. I also created some custom structs and enumerations to add a little more structure to the code.

@@ -4,27 +4,36 @@ import (
 	"testing"
 )
 
-// THESE TESTS ARE LIKELY TO FAIL IF YOU DO NOT CHANGE HOW the worker connects (e.g., you should use DialTimeout)
 func TestOpenPort(t *testing.T){
+	portsToScan := []int{10, 22, 80, 122, 555}
+	expectedOpen := 2
 
-    got := PortScanner() // Currently function returns only number of open ports
-    want := 2 // default value when passing in 1024 TO scanme; also only works because currently PortScanner only returns 
-	          //consider what would happen if you parameterize the portscanner address and ports to scan
+    actualOpen, _ := PortScanner("scanme.nmap.org", portsToScan) 
 
-    if got != want {
-        t.Errorf("got %d, wanted %d", got, want)
+    if expectedOpen != actualOpen {
+        t.Errorf("expected %d, got %d", expectedOpen, actualOpen)
+    }
+}
+
+func TestClosedPort(t *testing.T){
+	portsToScan := []int{10, 22, 80, 122, 555}
+	expectedClosed := 3
+
+    _, actualClosed := PortScanner("scanme.nmap.org", portsToScan) 
+
+    if expectedClosed != actualClosed {
+        t.Errorf("expected %d, got %d", expectedClosed, actualClosed)
     }
 }
 
 func TestTotalPortsScanned(t *testing.T){
-	// THIS TEST WILL FAIL - YOU MUST MODIFY THE OUTPUT OF PortScanner()
+	portsToScan := []int{10, 22, 80, 122, 555}
+	expectedPorts := 5
 
-    got := PortScanner() // Currently function returns only number of open ports
-    want := 1024 // default value; consider what would happen if you parameterize the portscanner ports to scan
+    actualOpen, actualClosed := PortScanner("scanme.nmap.org", portsToScan)
+	actualPorts := actualOpen + actualClosed
 
-    if got != want {
-        t.Errorf("got %d, wanted %d", got, want)
+    if expectedPorts != actualPorts {
+        t.Errorf("expected %d, got %d", actualPorts, expectedPorts)
     }
 }
-
-
