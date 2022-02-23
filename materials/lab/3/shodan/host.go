@@ -1,6 +1,6 @@
 package shodan
 
-// Do not use this file directly, do not attemp to compile this source file directly
+// Do not use this file directly, do not attempt to compile this source file directly
 // Go To lab/3/shodan/main/main.go
 
 import (
@@ -41,6 +41,10 @@ type HostSearch struct {
 	Matches []Host `json:"matches"`
 }
 
+type HostInfo struct {
+	Data      []Host     `json:"data"`
+}
+
 func (s *Client) HostSearch(q string) (*HostSearch, error) {
 	res, err := http.Get(
 		fmt.Sprintf("%s/shodan/host/search?key=%s&query=%s", BaseURL, s.apiKey, q),
@@ -51,6 +55,23 @@ func (s *Client) HostSearch(q string) (*HostSearch, error) {
 	defer res.Body.Close()
 
 	var ret HostSearch
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+
+	return &ret, nil
+}
+
+func (s *Client) SearchByIp(ip string) (*HostInfo, error) {
+	res, err := http.Get(
+		fmt.Sprintf("%s/shodan/host/%s?key=%s", BaseURL, ip, s.apiKey),
+	)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+
+	var ret HostInfo
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}

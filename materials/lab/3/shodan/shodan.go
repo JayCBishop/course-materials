@@ -1,4 +1,4 @@
-// Do not use this file directly, do not attemp to compile this source file directly
+// Do not use this file directly, do not attempt to compile this source file directly
 // Go To lab/3/shodan/main/main.go
 
 // DO NOT MODIFY THIS FILE WITH YOUR KEY!
