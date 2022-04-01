@@ -9,7 +9,6 @@ import (
 )
 
 // I separated the logging in to the scrape/logger module
-
 func main() {
 
 	logger.Logln(logger.Info, "starting API server")
@@ -23,9 +22,9 @@ func main() {
 
 	router.HandleFunc("/indexer", scrape.IndexFiles).Methods("GET")
 	router.HandleFunc("/search", scrape.FindFile).Methods("GET")
-	//TODO_2 router.HandleFunc("/addsearch/{regex}", scrape.TODOREPLACE).Methods("GET")
-	//TODO_3 router.HandleFunc("/clear", scrape.TODOREPLACE).Methods("GET")
-	//TODO_4 router.HandleFunc("/reset", scrape.TODOREPLACE).Methods("GET")
+	router.HandleFunc("/addsearch/{regex}", scrape.AddRegex).Methods("GET")
+	router.HandleFunc("/clear", scrape.ClearRegex).Methods("GET")
+	router.HandleFunc("/reset", scrape.ClearFiles).Methods("GET")
 
 	http.Handle("/", router)
 
